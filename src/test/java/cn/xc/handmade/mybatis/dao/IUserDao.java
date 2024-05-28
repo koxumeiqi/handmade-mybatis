@@ -4,6 +4,6 @@ public interface IUserDao {
 
     Object selectList();
 
-    Object selectByUsername(String username);
+    String selectByUsername(String username);
 
 }

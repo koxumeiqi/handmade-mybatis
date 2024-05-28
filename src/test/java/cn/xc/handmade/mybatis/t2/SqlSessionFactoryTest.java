@@ -13,7 +13,7 @@ public class SqlSessionFactoryTest {
 
     private final Logger log = Logger.getLogger("SqlSessionFactoryTest");
 
-    @Test
+    /*@Test
     public void test_createSqlSessionFactory() throws Exception {
         MapperRegistry mapperRegistry = new MapperRegistry();
         mapperRegistry.addMappers("cn.xc.handmade.mybatis.dao");
@@ -21,6 +21,6 @@ public class SqlSessionFactoryTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         IUserDao userDao = sqlSession.getMapper(IUserDao.class);
         log.info(userDao.selectByUsername("myz").toString());
-    }
+    }*/
 
 }

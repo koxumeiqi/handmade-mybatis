@@ -1,6 +1,7 @@
 package cn.xc.handmade.mybatis.binding;
 
 import cn.hutool.core.lang.ClassScanner;
+import cn.xc.handmade.mybatis.session.Configuration;
 import cn.xc.handmade.mybatis.session.SqlSession;
 
 import java.util.HashMap;
@@ -13,6 +14,12 @@ public class MapperRegistry {
 
     // mapper 的本地缓存
     private final Map<Class<?>, MapperProxyFactory<?>> knownMappers = new HashMap<>();
+
+    private final Configuration configuration;
+
+    public MapperRegistry(Configuration configuration) {
+        this.configuration = configuration;
+    }
 
     public <T> T getMapper(Class<T> type, SqlSession sqlSession) {
         final MapperProxyFactory<T> mapperProxyFactory = (MapperProxyFactory<T>) knownMappers.get(type);
@@ -28,7 +35,7 @@ public class MapperRegistry {
 
     public <T> void addMapper(Class<T> type) {
         if (type.isInterface()) {
-            if (knownMappers.containsKey(type))
+            if (hasMapper(type))
                 throw new RuntimeException("Type " + type + " is already known to the MapperRegistry.");
             knownMappers.put(type, new MapperProxyFactory<>(type));
         }
@@ -37,6 +44,10 @@ public class MapperRegistry {
     public void addMappers(String packageName) {
         ClassScanner.scanPackage(packageName)
                 .forEach(this::addMapper);
+    }
+
+    public <T> boolean hasMapper(Class<T> type) {
+        return knownMappers.containsKey(type);
     }
 
 

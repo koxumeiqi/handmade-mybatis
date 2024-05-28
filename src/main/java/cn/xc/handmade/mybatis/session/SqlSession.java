@@ -15,4 +15,6 @@ public interface SqlSession {
 
     Object selectOne(String statement);
 
+    Configuration getConfiguration();
+
 }
