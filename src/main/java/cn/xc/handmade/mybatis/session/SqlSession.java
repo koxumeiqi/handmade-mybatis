@@ -11,7 +11,7 @@ public interface SqlSession {
      */
     <T> T getMapper(Class<T> type);
 
-    Object selectOne(String statement, Object parameter);
+    <T> T selectOne(String statement, Object parameter);
 
     Object selectOne(String statement);
 

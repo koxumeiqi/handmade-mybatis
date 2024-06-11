@@ -5,7 +5,7 @@
 
 <mapper namespace="cn.xc.handmade.mybatis.dao.IUserDao">
 
-    <select id="selectByUsername" resultType="java.lang.String"
+    <select id="selectByUsername" resultType="cn.xc.handmade.mybatis.entity.User"
             parameterType="java.lang.String">
         select age, username
         from user
