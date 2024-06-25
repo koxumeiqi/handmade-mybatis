@@ -4,8 +4,16 @@ import cn.xc.handmade.mybatis.binding.MapperRegistry;
 import cn.xc.handmade.mybatis.datasource.druid.DruidDataSourceFactory;
 import cn.xc.handmade.mybatis.datasource.pooled.PooledDataSourceFactory;
 import cn.xc.handmade.mybatis.datasource.unpooled.UnpooledDataSourceFactory;
+import cn.xc.handmade.mybatis.executor.Executor;
+import cn.xc.handmade.mybatis.executor.SimpleExecutor;
+import cn.xc.handmade.mybatis.executor.resultset.DefaultResultSetHandler;
+import cn.xc.handmade.mybatis.executor.resultset.ResultSetHandler;
+import cn.xc.handmade.mybatis.executor.statement.PrepareStatementHandler;
+import cn.xc.handmade.mybatis.executor.statement.StatementHandler;
+import cn.xc.handmade.mybatis.mapping.BoundSql;
 import cn.xc.handmade.mybatis.mapping.Environment;
 import cn.xc.handmade.mybatis.mapping.MappedStatement;
+import cn.xc.handmade.mybatis.transaction.Transaction;
 import cn.xc.handmade.mybatis.transaction.jdbc.JdbcTransactionFactory;
 import cn.xc.handmade.mybatis.type.TypeAliasRegistry;
 
@@ -67,5 +75,17 @@ public class Configuration {
 
     public TypeAliasRegistry getTypeAliasRegistry() {
         return typeAliasRegistry;
+    }
+
+    public ResultSetHandler newResultSetHandler(Executor executor, MappedStatement mappedStatement, BoundSql boundSql) {
+        return new DefaultResultSetHandler(executor, mappedStatement, boundSql);
+    }
+
+    public StatementHandler newStatementHandler(SimpleExecutor simpleExecutor, MappedStatement ms, Object parameter, ResultHandler resultHandler, BoundSql boundSql) {
+        return new PrepareStatementHandler(simpleExecutor, ms, parameter, resultHandler, boundSql);
+    }
+
+    public Executor newExecutor(Transaction tx) {
+        return new SimpleExecutor(this, tx);
     }
 }

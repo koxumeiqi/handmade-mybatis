@@ -1,0 +1,28 @@
+##定义初始变量
+$!{mybatisCodehelper.vm}
+$!{define.vm}
+##设置回调
+#set($repositorySavePath = $tool.append(${AdapterSrcFolder},"/",${RepositoryPackagePath.replace(".","/")}))
+
+$!callback.setSavePath($repositorySavePath)
+$!callback.setFileName($tool.append($queryRepositoryClassName, ".java"))
+
+##拿到主键
+#if(!$tableInfo.pkColumn.isEmpty())
+    #set($pk = $tableInfo.pkColumn.get(0))
+#end
+
+package $!{RepositoryPackagePath};
+
+import $!{DOPackagePath}.$!{doClassName};
+## import $!{QueryPackagePath}.$!{queryClassName};
+
+/**
+ * $!{tableInfo.comment}($!{tableInfo.name})基础的仓储接口
+ *
+ * @author $!author
+ * @since $!time.currTime()
+ */
+public interface $!{queryRepositoryClassName} {
+
+}

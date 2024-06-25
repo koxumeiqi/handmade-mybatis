@@ -1,0 +1,31 @@
+##定义初始变量
+$!{mybatisCodehelper.vm}
+##设置回调
+#set($serviceSavePath = $tool.append(${ServiceSrcFolder},"/",${ServiceImplPackagePath.replace(".","/")}))
+
+$!callback.setSavePath($serviceSavePath)
+$!callback.setFileName($tool.append($queryServiceImplClassName, ".java"))
+
+package $!{ServiceImplPackagePath};
+
+import $!{ServicePackagePath}.$!{queryServiceClassName};
+import $!{RepositoryPackagePath}.$!{repositoryClassName};
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+
+/**
+ * $!{tableInfo.comment}($!{tableInfo.name})查询服务接口实现
+ *
+ * @author $!author
+ * @since $!time.currTime()
+ */
+@Service
+@Slf4j
+public class $!{queryServiceImplClassName} implements $!{queryServiceClassName} {
+
+    @Resource
+    private $!{repositoryClassName} $!tool.firstLowerCase($repositoryClassName);
+
+}

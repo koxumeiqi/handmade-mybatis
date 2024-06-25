@@ -1,0 +1,30 @@
+##定义初始变量
+$!{mybatisCodehelper.vm}
+##设置回调
+#set($queryControllerSavePath = $tool.append(${InterfaceSrcFolder},"/",${QueryControllerPackagePath.replace(".","/")}))
+
+$!callback.setSavePath($queryControllerSavePath)
+$!callback.setFileName($tool.append($queryControllerClassName, ".java"))
+
+package $!{QueryControllerPackagePath};
+
+import $!{ServicePackagePath}.$!{queryServiceClassName};
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+
+import javax.annotation.Resource;
+
+/**
+ * $!{tableInfo.comment}($!{tableInfo.name})查询控制器
+ *
+ * @author $!author
+ * @since $!time.currTime()
+ */
+@Controller
+@Slf4j
+public class $!{queryControllerClassName} {
+
+    @Resource
+    private $!{queryServiceClassName} $!tool.firstLowerCase($queryServiceClassName);
+
+}

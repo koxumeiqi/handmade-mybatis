@@ -1,0 +1,11 @@
+[
+  {
+    "groupName": "inbound",
+    "templateName": "inbound",
+    "globalConfigName": "MybatisCodeHelperPro",
+    "columnConfigName": "Default.json",
+    "typeMapperName": "Default.json",
+    "tableNameRegex": ".*",
+    "schemaNameRegex": ".*"
+  }
+]

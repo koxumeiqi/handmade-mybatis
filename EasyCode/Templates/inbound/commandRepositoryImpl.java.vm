@@ -1,0 +1,43 @@
+##定义初始变量
+$!{mybatisCodehelper.vm}
+##设置回调
+##$!callback.setFileName($tool.append($ServiceImplName, ".java"))
+##$!callback.setSavePath($tool.append($tableInfo.savePath, "/service/impl"))
+#set($repositoryImplSavePath = $tool.append(${InfrastructureSrcFolder},"/",${RepositoryImplPackagePath.replace(".","/")}))
+
+$!callback.setSavePath($repositoryImplSavePath)
+$!callback.setFileName($tool.append($commandRepositoryImplName, ".java"))
+
+#set($mapperName = $tool.append($tableInfo.name, ${mapperSuffix}))
+##拿到主键
+#if(!$tableInfo.pkColumn.isEmpty())
+    #set($pk = $tableInfo.pkColumn.get(0))
+#end
+
+package $!{RepositoryImplPackagePath};
+
+import $!{DOPackagePath}.$!{doClassName};
+## import $!{QueryPackagePath}.$!{queryClassName};
+import ${MapperPackagePath}.${mapperName};
+import ${RepositoryPackagePath}.${commandRepositoryClassName};
+import org.springframework.stereotype.Repository;
+import lombok.extern.slf4j.Slf4j;
+#if($!verison)
+## import com.poizon.scm.wms.inbound.common.exceptions.RepositoryException;
+#end
+import javax.annotation.Resource;
+
+/**
+ * $!{tableInfo.comment}($!{tableInfo.name})表基础仓储实现类
+ *
+ * @author $!author
+ * @since $!time.currTime()
+ */
+@Slf4j
+@Repository
+public class $!{commandRepositoryImplName} implements ${commandRepositoryClassName} {
+
+    @Resource
+    private ${mapperName} $!tool.firstLowerCase($mapperName);
+
+}

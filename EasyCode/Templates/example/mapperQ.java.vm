@@ -1,0 +1,42 @@
+##引入宏定义
+$!{define.vm}
+$!{mybatisCodehelper.vm}
+
+
+##使用宏定义设置回调（保存位置与文件后缀）
+###save("/entity", ".java")
+
+###foreach($column in $tableInfo.fullColumn)
+##        $!column.setName($column.obj.name)
+###end
+
+
+#set($converterSavePath = $tool.append(${converterSrcFolder},"/",${converterPackageName.replace(".","/")}))
+
+$!callback.setSavePath($converterSavePath)
+
+
+$!callback.setFileName($tool.append($converterClassName, ".java"))
+##使用宏定义设置包后缀
+package ${converterPackageName};
+##使用全局变量实现默认包导入
+$!{autoImport.vm}
+
+import ${dtoPackageName}.${dtoClassName};
+
+import ${modelPackageName}.${entityClassName};
+
+#set($entityVariableName=$tool.firstLowerCase($entityClassName))
+public class $!{converterClassName}{
+
+##    public static String tableName = "$!{tableInfo.obj.name}"
+##
+##
+##    public static String[] allColumNames = {#foreach($column in $tableInfo.fullColumn)"$column.obj.name"#if($velocityHasNext), #end#end}
+        public static ${dtoClassName} convert(${entityClassName} ${entityVariableName} ){
+            ${dtoClassName} vo = new ${dtoClassName}();
+            BeanUtils.copyProperties(${entityVariableName}, vo);
+            return vo;
+        }
+
+}

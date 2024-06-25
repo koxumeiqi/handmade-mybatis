@@ -1,0 +1,87 @@
+##引入宏定义
+$!{define.vm}
+$!{mybatisCodehelper.vm}
+
+
+##使用宏定义设置回调（保存位置与文件后缀）
+###save("/entity", ".java")
+
+###foreach($column in $tableInfo.fullColumn)
+##        $!column.setName($column.obj.name)
+###end
+
+
+#set($entitySavePath = $tool.append(${AdapterSrcFolder},"/",${DOPackagePath.replace(".","/")}))
+
+$!callback.setSavePath($entitySavePath)
+
+$!callback.setFileName($tool.append($doClassName, ".java"))
+##使用宏定义设置包后缀
+package ${DOPackagePath};
+
+##使用全局变量实现默认包导入
+$!{autoImport.vm}
+#if(${useLombok})
+import lombok.Getter;
+import lombok.Setter;
+#end
+#if($useSwagger)
+import io.swagger.annotations.ApiModel;
+#end
+#if($useOpenApi)
+import io.swagger.v3.oas.annotations.media.Schema;
+#end
+
+##使用宏定义实现类注释信息
+#tableComment("继承基础的DO")
+##check if use lombok
+#*#set($SkipFields = ["id","warehouseCode","deleted","tenantCode","version","attributes","createTime","modifyTime",
+    "modifyUserId",
+    "modifyRealName","modifyUserName","createUserId","createRealName","createUserName","tenantId","createdTime",
+    "updatedTime","createdUserId","createdRealName","createdUserName","updatedUserId","updatedRealName",
+    "updatedUserName"])*#
+#if(${useLombok})
+@Getter
+@Setter
+#end
+#if($useSwagger)
+@ApiModel(value = "$!{tableInfo.name}", description = "$!{tableInfo.comment}")
+#end
+#if($useOpenApi)
+@Schema(name = "$!{tableInfo.name}", description = "$!{tableInfo.comment}")
+#end
+public class $!{doClassName} {
+
+##    public static String tableName = "$!{tableInfo.obj.name}"
+##
+##
+##    public static String[] allColumNames = {#foreach($column in $tableInfo.fullColumn)"$column.obj.name"#if($velocityHasNext), #end#end}
+
+#foreach($column in $tableInfo.fullColumn)
+    #if($SkipFields.contains($column.name))
+    #else
+        #if(${column.comment})
+        /**
+         * ${column.comment}
+         */
+        #end
+        #if(${column.getName()})
+        #end
+        #if($useSwagger)
+        @ApiModelProperty(value = "${column.comment}")
+        #end
+        #if($useOpenApi)
+        @Schema(description = "${column.comment}")
+        #end
+        private $!{tool.getClsNameByFullName($column.type)} $!{column.name};
+    #end
+#end
+
+#if(!${useLombok})
+    #foreach($column in $tableInfo.fullColumn)
+        ##使用宏定义实现get,set方法
+        #getSetMethod($column)
+    #end
+#end
+
+}

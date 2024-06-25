@@ -1,0 +1,154 @@
+##following code can be generated use MybatisCodeHelperPro plugin mybatis generator mingrate to template generate.
+##copy group for different project.
+
+## 生成代码前修改子域名称
+#set($Domain=$!tool.firstLowerCase($tableInfo.name))
+
+## interfaces
+#set($InterfaceSrcFolder="${projectPath}/scp-train-interfaces/src/main/java")
+## commandController
+#set($ComandControllerPackagePath="com.dewu.scp.train.interfaces.controller.plan.${Domain}.command")
+## queryController
+#set($QueryControllerPackagePath="com.dewu.scp.train.interfaces.controller.plan.${Domain}.query")
+## rpc 接口实现
+#set($ApiImplPackagePath="com.dewu.scp.train.interfaces.rpc.plan.${Domain}")
+
+## admin-interfaces
+#set($AdminInterfacesSrcFolder="${projectPath}/scp-train-admin-interfaces/src/main/java")
+## commandController
+#set($AdminCommandControllerPackagePath="com.dewu.scp.train.admin.controller.plan.${Domain}.command")
+## queryController
+#set($AdminQueryControllerPackagePath="com.dewu.scp.train.admin.controller.plan.${Domain}.query")
+
+
+## domain
+#set($ServiceSrcFolder="${projectPath}/scp-train-domain/src/main/java")
+## commandService 和 queryService 接口
+#set($ServicePackagePath="com.dewu.scp.train.domain.plan.${Domain}.service")
+## commandService 和 queryService 接口实现类
+#set($ServiceImplPackagePath="com.dewu.scp.train.domain.plan.${Domain}.service.impl")
+
+## application
+
+## api
+#set($APISrcFolder="${projectPath}/scp-train-api/src/main/java")
+## queryApi
+#set($QueryAPIPackagePath="com.dewu.scp.train.api.plan.${Domain}.query")
+## commandApi
+#set($CommandAPIPackagePath="com.dewu.scp.train.api.plan.${Domain}.command")
+
+## adapter
+#set($AdapterSrcFolder="${projectPath}/scp-train-adapter/src/main/java")
+## integration
+## do
+#set($DOPackagePath="com.dewu.scp.train.adapter.integration.plan.${Domain}.model")
+## repository
+#set($RepositoryPackagePath="com.dewu.scp.train.adapter.integration.plan.${Domain}.repository")
+## entity
+#set($EntityPackagePath="com.dewu.scp.train.adapter.integration.plan.${Domain}.model.entity")
+## query
+#set($QueryPackagePath="com.dewu.scp.train.adapter.integration.plan.${Domain}.model.query")
+## rpc-repository
+#set($RPCPackagePath="com.dewu.scp.train.adapter.rpc.plan.${Domain}.repository")
+
+## infrastructure
+#set($InfrastructureSrcFolder="${projectPath}/scp-train-infrastructure/src/main/java")
+## mapper
+#set($MapperPackagePath="com.dewu.scp.train.infrastructure.integration.plan.${Domain}.mapper.generated")
+## mapper.xml
+#set($MapperXmlSrcFolder="${projectPath}/scp-train-infrastructure/src/main/resources")
+#set($MapperxmlPackagePath="mappers.plan.${Domain}.generated")
+## repositoryImpl
+#set($RepositoryImplPackagePath="com.dewu.scp.train.infrastructure.integration.plan.${Domain}.repository")
+## rpc-repository
+#set($RPCRepositoryPackagePath="com.dewu.scp.train.infrastructure.integration.rpc.plan.${Domain}.repository")
+
+##set($dtoSrcFolder="${projectPath}/wms-inbound-infrastructure/src/main/java")
+##set($dtoPackageName="com.poizon.scp.wms.inbound.infra.base.gen.dtoPackageName")
+##set($converterSrcFolder="${projectPath}/wms-inbound-infrastructure/src/main/java")
+##set($converterPackageName="${converterPackagePath}")
+##set($controllerSrcFolder="${projectPath}/wms-inbound-infrastructure/src/main/java")
+##set($controllerPackageName="com.poizon.scp.wms.inbound.infra.base.gen.controllerPackageName")
+
+#set($useLombok=true)
+#set($useSwagger=false)
+#set($useOpenApi=false)
+#set($addSchemaName=false)
+#set($mapperSuffix="Mapper")
+#set($entitySuffix="Entity")
+#set($serviceSuffix="Service")
+#set($controllerSuffix="Controller")
+#set($apiSuffix="Api")
+#if($tableInfo.obj.name.startsWith("xxx_"))
+    #set($tableInfo.name=${tableInfo.name.substring(5)})
+#end
+## adapter
+#set($doClassName = ${tableInfo.name}+"Do")
+#set($commandRepositoryClassName = ${tableInfo.name}+"CommandRepository")
+#set($queryRepositoryClassName = ${tableInfo.name}+"QueryRepository")
+
+## infrastructure
+#set($commandRepositoryImplName = ${tableInfo.name}+"CommandRepositoryImpl")
+#set($queryRepositoryImplName = ${tableInfo.name}+"QueryRepositoryImpl")
+#set($mapperName=${tableInfo.name}+$mapperSuffix)
+
+## domain
+#set($commandServiceClassName = ${tableInfo.name}+"CommandService")
+#set($commandServiceImplClassName = ${tableInfo.name}+"CommandServiceImpl")
+#set($queryServiceClassName = ${tableInfo.name}+"QueryService")
+#set($queryServiceImplClassName = ${tableInfo.name}+"QueryServiceImpl")
+
+## api
+#set($commandApiClassName = ${tableInfo.name}+"CommandApi")
+#set($queryApiClassName = ${tableInfo.name}+"QueryApi")
+
+## interfaces
+#set($commandControllerClassName = ${tableInfo.name}+"CommandController")
+#set($queryControllerClassName = ${tableInfo.name}+"QueryController")
+#set($commandApiImplClassName = $tool.append($tableInfo.name, "CommandApiImpl"))
+#set($queryApiImplClassName = $tool.append($tableInfo.name, "QueryApiImpl"))
+
+#set($dtoClassName = $tool.append($tableInfo.name, "Vo"))
+#set($converterClassName =  $tool.append($tableInfo.name, "Converter"))
+#set($queryClassName = ${tableInfo.name}+"Query")
+
+## 通用字段获取
+#foreach($column in $tableInfo.fullColumn)
+    #if($!column.obj.name.equals("version"))
+        #set($verison="true")
+    #end
+    #if($!column.obj.name.equals("deleted"))
+        #set($deleted="true")
+    #end
+    #if($!column.obj.name.equals("tenant_code"))
+        #set($tenantCode="true")
+    #end
+    #if($!column.obj.name.equals("tenant_id"))
+        #set($tenantId="true")
+    #end
+#end
+
+
+
+
+
+###foreach($column in $tableInfo.fullColumn)
+##    #set($propertyName=$column.obj.name)
+##    #set($propertyName=$propertyName.substring(0,1).toLowerCase()+$propertyName.substring(1))
+##    $!column.setName($propertyName)
+##    #if($propertyName.endsWith("ID"))
+##        #set($lenght=$propertyName.length() - 2)
+##        #set($theName=${propertyName.substring(0,$lenght)}+"Id")
+##        $!column.setName($theName)
+##    #end
+###end
+
+
+
+###foreach($column in $tableInfo.fullColumn)
+##    $column.obj.dataType.specification
+##    #if($column.obj.dataType.specification.contains("int(11)"))
+##        $column.setType("java.util.Map<java.lang.String,java.lang.String>")
+##    #end
+###end
+

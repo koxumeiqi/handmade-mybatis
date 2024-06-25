@@ -1,0 +1,44 @@
+##定义初始变量
+$!{mybatisCodehelper.vm}
+#set($daoName = $tool.append($tableInfo.name, ${mapperSuffix}))
+##设置回调
+#set($mapperName = $tool.append(${InfrastructureSrcFolder},"/",${MapperPackagePath.replace(".","/")}))
+
+$!callback.setSavePath($mapperName)
+$!callback.setFileName($tool.append($daoName, ".java"))
+
+##拿到主键
+#if(!$tableInfo.pkColumn.isEmpty())
+    #set($pk = $tableInfo.pkColumn.get(0))
+#end
+
+package $!{MapperPackagePath};
+
+import $!{DOPackagePath}.$!{doClassName};
+
+import java.util.List;
+## import $!{QueryPackagePath}.$!{queryClassName};
+
+/**
+ * $!{tableInfo.comment}($!{tableInfo.name})表数据库访问层
+ *
+ * @author $!author
+ * @since $!time.currTime()
+ */
+public interface $!{daoName} {
+
+    int insertSelective($doClassName $!tool.firstLowerCase($doClassName));
+
+    int insertBatch(List<$doClassName> $!tool.firstLowerCase($doClassName));
+
+    int updateByPrimaryKey($doClassName $!tool.firstLowerCase($doClassName));
+
+    int updateBatchByPrimaryKeys(List<$doClassName> $!tool.firstLowerCase($doClassName));
+
+    $doClassName selectByPrimaryKey(Long id);
+
+    $doClassName selectOneSelective($doClassName $!tool.firstLowerCase($doClassName));
+
+    List<$doClassName> selectListSelective($doClassName $!tool.firstLowerCase($doClassName));
+
+}

@@ -1,0 +1,30 @@
+##定义初始变量
+$!{mybatisCodehelper.vm}
+##设置回调
+#set($commandControllerSavePath = $tool.append(${InterfaceSrcFolder},"/",${ComandControllerPackagePath.replace(".","/")}))
+
+$!callback.setSavePath($commandControllerSavePath)
+$!callback.setFileName($tool.append($commandControllerClassName, ".java"))
+
+package $!{ComandControllerPackagePath};
+
+import $!{ServicePackagePath}.$!{commandServiceClassName};
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+
+import javax.annotation.Resource;
+
+/**
+ * $!{tableInfo.comment}($!{tableInfo.name})命令控制器
+ *
+ * @author $!author
+ * @since $!time.currTime()
+ */
+@Controller
+@Slf4j
+public class $!{commandControllerClassName} {
+
+    @Resource
+    private $!{commandServiceClassName} $!tool.firstLowerCase($commandServiceClassName);
+
+}

@@ -1,0 +1,30 @@
+##定义初始变量
+$!{mybatisCodehelper.vm}
+##设置回调
+#set($apiImplSavePath = $tool.append(${InterfaceSrcFolder},"/",${ApiImplPackagePath.replace(".","/")}))
+
+$!callback.setSavePath($apiImplSavePath)
+$!callback.setFileName($tool.append($commandApiImplClassName, ".java"))
+
+package $!{ApiImplPackagePath};
+
+import $!{CommandAPIPackagePath}.$!{commandApiClassName};
+import $!{ServicePackagePath}.$!{commandServiceClassName};
+import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboService;
+import javax.annotation.Resource;
+
+/**
+ * $!{tableInfo.comment}($!{tableInfo.name})RPC接口实现
+ *
+ * @author $!author
+ * @since $!time.currTime()
+ */
+@DubboService
+@Slf4j
+public class $!{commandApiImplClassName} implements $!{commandApiClassName} {
+
+    @Resource
+    private $!{commandServiceClassName} $!tool.firstLowerCase($commandServiceClassName);
+
+}

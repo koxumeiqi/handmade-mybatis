@@ -1,0 +1,19 @@
+##定义初始变量
+$!{mybatisCodehelper.vm}
+##设置回调
+#set($commandApiSavePath = $tool.append(${APISrcFolder},"/",${CommandAPIPackagePath.replace(".","/")}))
+
+$!callback.setSavePath($commandApiSavePath)
+$!callback.setFileName($tool.append($commandApiClassName, ".java"))
+
+package $!{CommandAPIPackagePath};
+
+/**
+ * $!{tableInfo.comment}($!{tableInfo.name})查询服务接口
+ *
+ * @author $!author
+ * @since $!time.currTime()
+ */
+public interface $!{commandApiClassName} {
+
+}

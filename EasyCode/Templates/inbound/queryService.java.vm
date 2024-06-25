@@ -1,0 +1,19 @@
+##定义初始变量
+$!{mybatisCodehelper.vm}
+##设置回调
+#set($serviceSavePath = $tool.append(${ServiceSrcFolder},"/",${ServicePackagePath.replace(".","/")}))
+
+$!callback.setSavePath($serviceSavePath)
+$!callback.setFileName($tool.append($queryServiceClassName, ".java"))
+
+package $!{ServicePackagePath};
+
+/**
+ * $!{tableInfo.comment}($!{tableInfo.name})查询服务接口
+ *
+ * @author $!author
+ * @since $!time.currTime()
+ */
+public interface $!{queryServiceClassName} {
+
+}
