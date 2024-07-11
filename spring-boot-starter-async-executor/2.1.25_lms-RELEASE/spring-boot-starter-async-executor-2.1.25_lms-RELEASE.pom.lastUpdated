@@ -1,0 +1,10 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu May 30 17:04:55 CST 2024
+http\://nexus.poizon.com/nexus/content/groups/public/.lastUpdated=1716263662964
+http\://0.0.0.0/.error=Could not transfer artifact com.dewu\:spring-boot-starter-async-executor\:pom\:2.1.25_lms-RELEASE from/to maven-default-http-blocker (http\://0.0.0.0/)\: Blocked mirror for repositories\: [poizon-snapshots (http\://nexus.poizon.com/nexus/content/repositories/snapshots/, default, snapshots), poizon-releases (http\://nexus.poizon.com/nexus/content/repositories/releases/, default, releases)]
+https\://maven.aliyun.com/nexus/content/groups/public/.lastUpdated=1717059895002
+https\://repo.maven.apache.org/maven2/.lastUpdated=1716263417718
+@default-maven-default-http-blocker-http\://0.0.0.0/.lastUpdated=1716263417405
+https\://maven.aliyun.com/nexus/content/groups/public/.error=
+https\://nexus.shizhuang-inc.com/nexus/content/groups/public/.lastUpdated=1717059895041
+https\://repo.maven.apache.org/maven2/.error=

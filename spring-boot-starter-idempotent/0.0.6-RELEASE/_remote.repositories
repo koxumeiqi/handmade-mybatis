@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue May 28 16:49:29 CST 2024
+spring-boot-starter-idempotent-0.0.6-RELEASE.pom>nexus=
+spring-boot-starter-idempotent-0.0.6-RELEASE.jar>nexus=
+spring-boot-starter-idempotent-0.0.6-RELEASE-sources.jar>nexus=
