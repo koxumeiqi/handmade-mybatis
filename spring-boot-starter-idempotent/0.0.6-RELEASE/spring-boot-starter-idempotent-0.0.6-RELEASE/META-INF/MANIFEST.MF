@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: spring-boot-starter-idempotent
+Implementation-Version: 0.0.6-RELEASE
+Built-By: chenqiang
+Implementation-Vendor-Id: com.dewu
+Created-By: Apache Maven 3.6.3
+Build-Jdk: 1.8.0_322
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/spring-boot-starter-idempotent
+
